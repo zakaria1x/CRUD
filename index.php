@@ -1,6 +1,5 @@
-
 <?php
-require 'config/database.php';
+include './config/database.php';
 
 $sql = "SELECT * FROM CLIENT";
 $stmt = $pdo->query($sql);
