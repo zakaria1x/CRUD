@@ -9,15 +9,22 @@ $connection = $db->getConnection();
 
 if ($db) {
     $reservation = new Reservation($connection);
+    $client = new Client($connection);
+
+    $isAuthenticated = $client->isLogged();
+    if (!$isAuthenticated) {
+        header('Location: login.php');
+    }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $reservation->setChambreId($_POST['chambre_id']);
-
-        $lastInsertedId = $client->save();
-        if ($lastInsertedId) {
-            header('Location: index.php?client_id=' . $lastInsertedId);
+        $reservation->setClientId($_GET['client_id']);
+        $reservation->setDateDebut($_POST['date_debut']);
+        $reservation->setDateFin($_POST['date_fin']);
+        $reservation->setStatut('en attente');
+        if ($reservation->save()) {
+            header('Location: paiement.php');
         } else {
-            header('Location: index.php?error=something went wrong');
+            die('Erreur lors de la réservation');
         }
 
     }
@@ -39,6 +46,7 @@ if ($db) {
 
 <div class="container">
     <h1>Réserver une chambre</h1>
+    <form method="POST">
         <div class="mb-3">
             <label for="date_debut" class="form-label
             ">Date de début</label>
@@ -47,17 +55,6 @@ if ($db) {
         <div class="mb-3">
             <label for="date_fin" class="form-label">Date de fin</label>
             <input type="date" class="form-control" id="date_fin" name="date_fin">
-        </div>
-
-        <div class="mb-3">
-            <label for="chambre_id" class="form-label
-            ">Chambre</label>
-            <select class="form-select" id="chambre_id" name="chambre_id">
-                <option selected>Choisir une chambre</option>
-                <option value="1">Chambre simple</option>
-                <option value="2">Chambre double</option>
-                <option value="3">Chambre triple</option>
-            </select>
         </div>
         <button type="submit" class="btn btn-primary">Réserver</button>
     </form>

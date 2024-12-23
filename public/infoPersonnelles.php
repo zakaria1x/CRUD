@@ -19,15 +19,15 @@ if ($db) {
         $client->setCinId($_POST['cin_id']);
         $client->setHashedPassword($_POST['password']);
 
-        $hash = password_hash($client->getPassportId(), PASSWORD_DEFAULT);
+        $hash = password_hash($client->getHashedPassword(), PASSWORD_DEFAULT);
         $client->setHashedPassword($hash);
 
         $id = $client->save();
         var_dump($id);
         if ($id) {
-            header('Location: Reservation.php?client_id=' . $id);
+            header('Location: login.php?client_id=' . $id);
         } else {
-            header('Location: Reservation.php?error=something went wrong');
+            header('Location: login.php?error=something went wrong');
         }
 
     }
