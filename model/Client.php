@@ -163,6 +163,37 @@ class Client
         }
     }
 
+    public function login($email, $password)
+    {
+        $sql = "SELECT * FROM $this->table WHERE email = :email";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        $data = $stmt->fetch();
+        
+
+        if ($data) {
+            if (password_verify($password, $data['HASHED_PASSWORD'])) {
+                return $data['ID_CLIENT'];
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+
+    public function isLogged()
+    {
+        session_start();
+        if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function __destruct()
     {
         $this->conn = null;
