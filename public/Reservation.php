@@ -6,23 +6,21 @@ require_once '../config/db.php';
 
 $db = new Database();
 $connection = $db->getConnection();
+$isAuthenticated = Client::isLogged();
+if (!$isAuthenticated) {
+    header('Location: login.php');
+}
 
 if ($db) {
     $reservation = new Reservation($connection);
-    $client = new Client($connection);
-
-    $isAuthenticated = $client->isLogged();
-    if (!$isAuthenticated) {
-        header('Location: login.php');
-    }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $reservation->setClientId($_GET['client_id']);
+        $reservation->setClientId($_SESSION['ID_CLIENT']);
         $reservation->setDateDebut($_POST['date_debut']);
         $reservation->setDateFin($_POST['date_fin']);
         $reservation->setStatut('en attente');
         if ($reservation->save()) {
-            header('Location: paiement.php');
+            header('Location: index.php');
         } else {
             die('Erreur lors de la réservation');
         }
