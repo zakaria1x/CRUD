@@ -170,11 +170,14 @@ class Client
         $stmt->bindParam(':email', $email);
         $stmt->execute();
         $data = $stmt->fetch();
-        
+
 
         if ($data) {
             if (password_verify($password, $data['HASHED_PASSWORD'])) {
-                return $data['ID_CLIENT'];
+                session_start();
+                $_SESSION['logged_in'] = true;
+                $_SESSION['ID_CLIENT'] = $data['ID_CLIENT'];
+                return true;
             } else {
                 return false;
             }
@@ -184,7 +187,7 @@ class Client
     }
 
 
-    public function isLogged()
+    public  static function isLogged()
     {
         session_start();
         if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
@@ -192,6 +195,13 @@ class Client
         } else {
             return false;
         }
+    }
+
+    public static function logout()
+    {
+        session_start();
+        session_destroy();
+        header('Location: login.php');
     }
 
     public function __destruct()
