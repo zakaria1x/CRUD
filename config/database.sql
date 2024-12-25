@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS PAIEMENT (
 
 -- Table for CHAMBRE
 CREATE TABLE IF NOT EXISTS CHAMBRE (
-  id_chambre VARCHAR2(255) DEFAULT SYS_GUID() NOT NULL,
+  id_chambre VARCHAR2(255) NOT NULL,
   type VARCHAR2(255) NOT NULL,
   tarif NUMBER(10, 2) NOT NULL,
   etat VARCHAR2(255) CHECK (etat IN ('disponible', 'occupée', 'en maintenance')) NOT NULL,
