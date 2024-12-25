@@ -65,13 +65,15 @@ class Reservation
     }
 
 
-    public function getReservations()
+    public function getReservationsByClientId($client_id)
     {
-        $query = "SELECT * FROM " . $this->table;
+        $query = "SELECT * FROM " . $this->table . " WHERE id_client = :client_id";
         $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':client_id', $client_id);
         $stmt->execute();
         return $stmt->fetchAll();
     }
+    
 
     public function getReservationById($id)
     {
