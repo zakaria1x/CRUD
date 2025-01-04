@@ -5,6 +5,7 @@ require_once '../model/Reservation.php';
 require_once '../config/db.php';
 
 $db = new Database();
+
 $connection = $db->getConnection();
 $isAuthenticated = Client::isLogged();
 if (!$isAuthenticated) {
