@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS CLIENT (
   hashed_password VARCHAR2(255) NOT NULL,
   passport_id VARCHAR2(255) UNIQUE,
   cin_id VARCHAR2(255) UNIQUE,
+  is_admin BOOLEAN DEFAULT FALSE,
   CONSTRAINT pk_client PRIMARY KEY (id_client)
 );
 
