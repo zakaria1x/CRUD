@@ -82,6 +82,14 @@ class Reservation
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         return $stmt->fetch();
-    }
+    }    
 
+
+    public function approuverReservation($id)
+    {
+        $query = "UPDATE " . $this->table . " SET statut = 'confirmée' WHERE id_reservation = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id);
+        return $stmt->execute();
+    }
 }
