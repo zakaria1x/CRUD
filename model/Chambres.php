@@ -79,4 +79,13 @@ class Chambres
             return false;
         }
     }
+
+    public function getChambres()
+    {
+        $query = "SELECT * FROM " . $this->table;
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
 }
