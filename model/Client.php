@@ -77,7 +77,7 @@ class Client extends Admin
     public function save()
     {
         try {
-            $sql = "INSERT INTO $this->table (nom, prenom, adresse, telephone, email, hashed_password, passport_id, cin_id) VALUES (:nom, :prenom, :adresse, :telephone, :email, :hashed_password, :passport_id, :cin_id, :is_admin)";
+            $sql = "INSERT INTO $this->table (nom, prenom, adresse, telephone, email, hashed_password, passport_id, cin_id, is_admin) VALUES (:nom, :prenom, :adresse, :telephone, :email, :hashed_password, :passport_id, :cin_id, :is_admin)";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':nom', $this->nom);
             $stmt->bindParam(':prenom', $this->prenom);
@@ -113,6 +113,7 @@ class Client extends Admin
                 session_start();
                 $_SESSION['logged_in'] = true;
                 $_SESSION['ID_CLIENT'] = $data['ID_CLIENT'];
+                $_SESSION['is_admin'] = $data['IS_ADMIN'];
                 return true;
             } else {
                 return false;
@@ -139,6 +140,16 @@ class Client extends Admin
         session_destroy();
         header('Location: login.php');
     }
+
+    public function getClientById($id)
+    {
+        $sql = "SELECT * FROM $this->table WHERE ID_CLIENT = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+
 
     public function __destruct()
     {
