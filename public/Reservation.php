@@ -1,8 +1,8 @@
 <?php
 
+require_once '../config/db.php';
 require_once '../model/Client.php';
 require_once '../model/Reservation.php';
-require_once '../config/db.php';
 
 $db = new Database();
 
