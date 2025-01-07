@@ -1,7 +1,7 @@
 <?php
 
-require_once 'config/Database.php';
-require_once 'model/Admin.php';
+require_once '../config/db.php';
+require_once '../model/admin.php';
 
 $db = new Database();
 $connection = $db->getConnection();
@@ -30,7 +30,6 @@ if ($connection) {
 ?>
 
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -50,7 +49,7 @@ if ($connection) {
                         <h3>Admin Signup</h3>
                     </div>
                     <div class="card-body">
-                        <form action="admin_signup_process.php" method="POST">
+                        <form method="POST">
                             <div class="form-group">
                                 <label for="nom">Nom</label>
                                 <input type="text" class="form-control" id="nom" name="nom" required>
@@ -62,6 +61,11 @@ if ($connection) {
                             <div class="form-group">
                                 <label for="email">Email</label>
                                 <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+
+                            <div class="form-group ">
+                                <label for="telephone">Telephone</label>
+                                <input type="text" class="form-control" id="telephone" name="telephone" required>
                             </div>
 
                             <div class="form-group">
