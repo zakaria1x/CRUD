@@ -48,13 +48,15 @@ class Database
     }
 
     public function createSchema()
-    {try {
-        $this->conn->exec("CREATE USER $this->schemaName IDENTIFIED BY password");
-        $this->conn->exec("GRANT ALL PRIVILEGES TO $this->schemaName");
-        echo 'Schema created successfully <br>';
-    } catch (PDOException $e) {
-        die("Schema creation failed: " . $e->getMessage());
-    }}
+    {
+        try {
+            $this->conn->exec("CREATE USER $this->schemaName IDENTIFIED BY password");
+            $this->conn->exec("GRANT ALL PRIVILEGES TO $this->schemaName");
+            echo 'Schema created successfully <br>';
+        } catch (PDOException $e) {
+            die("Schema creation failed: " . $e->getMessage());
+        }
+    }
 
     public function down()
     {
@@ -80,5 +82,4 @@ class Database
     {
         $this->conn = null;
     }
-
 }

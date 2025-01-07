@@ -1,85 +1,19 @@
 <?php
 
-class Client
+require_once 'admin.php';
+
+
+class Client extends Admin
 {
-
-    protected $table = 'CLIENT';
-
-    private $nom;
-    private $prenom;
-    private $adresse;
-    private $telephone;
-    private $email;
-    private $hashed_password;
     private $passport_id;
     private $cin_id;
-    private $conn;
 
     public function __construct($db)
     {
-        $this->conn = $db;
+        parent::__construct($db);
     }
 
-    public function setNom($nom)
-    {
-        $this->nom = $nom;
-    }
-
-    public function getNom()
-    {
-        return $this->nom;
-    }
-
-    public function setPrenom($prenom)
-    {
-        $this->prenom = $prenom;
-    }
-
-    public function getPrenom()
-    {
-        return $this->prenom;
-    }
-
-    public function setAdresse($adresse)
-    {
-        $this->adresse = $adresse;
-    }
-
-    public function getAdresse()
-    {
-        return $this->adresse;
-    }
-
-    public function setTelephone($telephone)
-    {
-        $this->telephone = $telephone;
-    }
-
-    public function getTelephone()
-    {
-        return $this->telephone;
-    }
-
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
-
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    public function setHashedPassword($hashed_password)
-    {
-        $this->hashed_password = $hashed_password;
-    }
-
-    public function getHashedPassword()
-    {
-        return $this->hashed_password;
-    }
-
+    
     public function setPassportId($passport_id)
     {
         $this->passport_id = $passport_id;
@@ -143,7 +77,7 @@ class Client
     public function save()
     {
         try {
-            $sql = "INSERT INTO $this->table (nom, prenom, adresse, telephone, email, hashed_password, passport_id, cin_id) VALUES (:nom, :prenom, :adresse, :telephone, :email, :hashed_password, :passport_id, :cin_id)";
+            $sql = "INSERT INTO $this->table (nom, prenom, adresse, telephone, email, hashed_password, passport_id, cin_id, is_admin) VALUES (:nom, :prenom, :adresse, :telephone, :email, :hashed_password, :passport_id, :cin_id, :is_admin)";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':nom', $this->nom);
             $stmt->bindParam(':prenom', $this->prenom);
@@ -153,13 +87,15 @@ class Client
             $stmt->bindParam(':hashed_password', $this->hashed_password);
             $stmt->bindParam(':passport_id', $this->passport_id);
             $stmt->bindParam(':cin_id', $this->cin_id);
+            $stmt->bindParam(':is_admin', $this->is_admin);
+            
             if ($stmt->execute()) {
                 return $this->isEmailExists($this->email)['ID_CLIENT'];
             } else {
                 return false;
             }
         } catch (PDOException $e) {
-            return $e->getMessage();
+            die("Error: " . $e->getMessage());
         }
     }
 
@@ -177,6 +113,7 @@ class Client
                 session_start();
                 $_SESSION['logged_in'] = true;
                 $_SESSION['ID_CLIENT'] = $data['ID_CLIENT'];
+                $_SESSION['is_admin'] = $data['IS_ADMIN'];
                 return true;
             } else {
                 return false;
@@ -187,7 +124,7 @@ class Client
     }
 
 
-    public  static function isLogged()
+    public static function isLogged()
     {
         session_start();
         if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
@@ -203,6 +140,16 @@ class Client
         session_destroy();
         header('Location: login.php');
     }
+
+    public function getClientById($id)
+    {
+        $sql = "SELECT * FROM $this->table WHERE ID_CLIENT = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+
 
     public function __destruct()
     {

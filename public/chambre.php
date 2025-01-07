@@ -5,7 +5,6 @@ require_once '../model/Chambres.php';
 require_once '../config/db.php';
 require_once '../model/Concerne.php';
 
-
 $db = new Database();
 $connection = $db->getConnection();
 
@@ -41,7 +40,6 @@ if ($db) {
 } else {
     echo 'Database connection failed';
 }
-
 
 ?>
 
