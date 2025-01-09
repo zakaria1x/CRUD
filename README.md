@@ -18,10 +18,17 @@
     - [Contraintes de service supplémentaire](#contraintes-de-service-supplémentaire)
   - [MCD (Modèle Conceptuel de Données)](#mcd-modèle-conceptuel-de-données)
   - [MLD (Modèle Logique de Données)](#mld-modèle-logique-de-données)
-  - [SQL](#sql)
+  - [SQL - Oracle](#sql---oracle)
 - [Partie 2 : MCTA (Modèle conceptuel de traitement analytique)](#partie-2--mcta-modèle-conceptuel-de-traitement-analytique)
 - [Partie 3 : CVO (Cycle de vie d'un objet)](#partie-3--cvo-cycle-de-vie-dun-objet)
-  - [Conclusion](#conclusion)
+- [Partie 4 : Programmation Orientée Objet](#partie-4--programmation-orientée-objet)
+  - [Objectifs](#objectifs)
+  - [Structure du Projet](#structure-du-projet)
+  - [Les Classes](#les-classes)
+  - [Les Vues](#les-vues)
+  - [La Base de Données](#la-base-de-données)
+  - [Les Scripts](#les-scripts)
+  - [Les Diagrammes](#les-diagrammes)
 
 # Partie 1 : Cahier des charges
 
@@ -298,6 +305,135 @@ CREATE TABLE IF NOT EXISTS ASSOCIER_SERVICE_RESERVATION (
 
 </center>
 
-## Conclusion
+# Partie 4 : Programmation Orientée Objet
 
-Ce système de réservation vise à offrir une solution robuste et fiable pour répondre aux besoins des gestionnaires et clients du Riad. Grâce à une conception méthodique, une implémentation efficace et un respect des contraintes, ce projet constitue un outil essentiel pour améliorer l'efficacité et la satisfaction client.
+## Objectifs
+
+L'objectif de cette partie est de développer une application web pour la gestion des réservations d'un Riad en appliquant le paradigme de la programmation orientée objet (POO). Les principales étapes incluent :
+
+- **Développement** : Créer une application web fonctionnelle.
+- **Technologies** : Utiliser PHP pour le backend et Oracle pour la gestion des données.
+- **Conception** : Concevoir des classes représentant les entités principales et secondaires.
+- **Fonctionnalités** : Implémenter des méthodes pour gérer les fonctionnalités de l'application.
+- **Interface** : Développer des vues conviviales pour les utilisateurs.
+
+---
+
+## 1. Structure du Projet
+
+```
+.
+├── config
+│   ├── database.sql
+│   ├── db.php
+│   └── drop.sql
+├── diagrams
+│   ├── cvo_10.jpeg
+│   ├── cvo_11.jpeg
+│   ├── cvo_12.jpeg
+│   ├── cvo_13.jpeg
+│   ├── cvo_1.jpeg
+│   ├── cvo_2.jpeg
+│   ├── cvo_3.jpeg
+│   ├── cvo_4.jpeg
+│   ├── cvo_5.jpeg
+│   ├── cvo_6.jpeg
+│   ├── cvo_7.jpeg
+│   ├── cvo_8.jpeg
+│   ├── cvo_9.jpeg
+│   ├── mcta_1.jpeg
+│   ├── mcta_2.jpeg
+│   ├── mcta_3.jpeg
+│   └── mcta_4.jpeg
+├── docker-compose.yaml
+├── image.png
+├── model
+│   ├── admin.php
+│   ├── Chambres.php
+│   ├── Client.php
+│   ├── Concerne.php
+│   ├── Paiement.php
+│   └── Reservation.php
+├── public
+│   ├── admin_signup.php
+│   ├── admin_view.php
+│   ├── approuver.php
+│   ├── chambre.php
+│   ├── client_view.php
+│   ├── index.php
+│   ├── infoPersonnelles.php
+│   ├── login.php
+│   └── Reservation.php
+└── README.md
+
+5 directories, 38 files
+
+```
+
+---
+
+## 2. Les Classes
+
+Les classes et leurs méthodes associées sont disponibles dans le dossier [`model`](./model). Voici une brève description des principales entités :
+
+- **Admin** : Gestion des utilisateurs administrateurs.
+- **Chambres** : Représentation et gestion des chambres du Riad.
+- **Client** : Gestion des informations des clients.
+- **Concerne** : Liaison entre réservations et chambres.
+- **Paiement** : Gestion des transactions de paiement.
+- **Reservation** : Gestion des réservations des chambres.
+
+---
+
+## 3. Les Vues
+
+Les vues de l'application sont accessibles dans le dossier [`public`](./public). Les principales fonctionnalités incluent :
+
+### Création de Compte et Connexion
+
+L'utilisateur peut créer un compte et se connecter pour accéder à son espace personnel.
+
+![Création de compte](image-1.png)  
+<p style="text-align: center;">Informations personnelles</p>
+
+### Réservation de Chambre
+
+Cette fonctionnalité permet à l'utilisateur de réserver une chambre en sélectionnant une date de début et une date de fin.
+
+![Réservation](image-2.png)  
+<p style="text-align: center;">Réservation</p>
+
+### Gestion des Réservations
+
+La gestion des réservations varie selon le rôle de l'utilisateur :
+
+- **Administrateur** : Approber ou rejeter les réservations.
+- **Client** : Consulter ses réservations.
+
+![Accueil - Admin](image-3.png)  
+![Accueil - Client](image-4.png)  
+<p style="text-align: center;">Page d'accueil</p>
+
+---
+
+## 4. La Base de Données
+
+Les scripts et configurations pour la base de données Oracle sont disponibles dans le dossier [`config`](./config). Les fichiers incluent :
+
+- **`database.sql`** : Script de création des tables.
+- **`db.php`** : Configuration de connexion à la base de données.
+- **`drop.sql`** : Script pour supprimer les tables.
+
+---
+
+## 5. Les Scripts
+
+Les scripts utilisés pour les opérations de la base de données se trouvent également dans le dossier [`config`](./config).
+
+---
+
+## 6. Les Diagrammes
+
+Les diagrammes UML et autres illustrations utiles pour comprendre le système sont disponibles dans le dossier [`diagrams`](./diagrams).
+
+---
