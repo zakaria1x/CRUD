@@ -1,5 +1,15 @@
 # Conception d'un système de réservation pour un Riad
 
+
+## Auteurs
+
+- Zakaria Ouahdani
+- Yassine Amjad
+- Zouhair Elghouate
+- Ahmed Belrhazi
+- Ziad Ouizid
+
+
 ## Table des matières
 
 - [Partie 1 : Cahier des charges](#partie-1--cahier-des-charges)
