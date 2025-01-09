@@ -434,6 +434,6 @@ Les scripts utilisés pour les opérations de la base de données se trouvent é
 
 ## 6. Les Diagrammes
 
-Les diagrammes UML et autres illustrations utiles pour comprendre le système sont disponibles dans le dossier [`diagrams`](./diagrams).
+Les diagrammes MERISE 2 et autres illustrations utiles pour comprendre le système sont disponibles dans le dossier [`diagrams`](./diagrams).
 
 ---
